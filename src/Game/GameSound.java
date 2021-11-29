@@ -10,6 +10,7 @@ public abstract class GameSound {
     Sound bow;
     Sound music;
     Sound death;
+   
 
 
 }
