@@ -5,6 +5,20 @@ import Game.Character.CharacterWeapon;
 
 public class GameCharacter {
 
-    CharacterPower characterPower;
-    CharacterWeapon characterWeapon;
+    private CharacterPower characterPower;
+    private CharacterWeapon characterWeapon;
+
+    public GameCharacter(){}
+
+    public GameCharacter(String name){}
+
+    /*TODO
+    Life
+    Attack
+    Damage
+    isAlive
+    Weapon
+    Power?
+
+     */
 }

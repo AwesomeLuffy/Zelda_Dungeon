@@ -12,8 +12,6 @@ public class Main {
         } catch (SlickException e) {
             System.out.println();
         }
-
-        System.out.println("prout");
     }
     
 }

@@ -1,6 +1,13 @@
 package Game.Map;
 
+import Game.Animation.Animation;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameMapManager {
+
+    private List<Map> allMap = new ArrayList<Map>();
 
     private static GameMapManager gmm;
 

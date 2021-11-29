@@ -1,5 +1,9 @@
 package Game.Character;
 
 public class CharacterWeapon {
-    WeaponProjectile weaponProjectile;
+    private WeaponProjectile weaponProjectile;
+
+    public CharacterWeapon(){}
+
+    public CharacterWeapon(String name){}
 }

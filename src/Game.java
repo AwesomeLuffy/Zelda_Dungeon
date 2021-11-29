@@ -1,9 +1,13 @@
+import Game.*;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Game extends BasicGame {
+
+    UserInteraction userInteraction;
 
     public Game(String title) {
         super(title);
@@ -16,6 +20,7 @@ public class Game extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
+
 
     }
 
