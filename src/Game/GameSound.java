@@ -1,6 +1,7 @@
 package Game;
 
 import org.newdawn.slick.*;
+import org.newdawn.slick.SlickException;
 import java.util.Random;
 
 public class GameSound {
@@ -15,18 +16,31 @@ public class GameSound {
     private static GameSound singleInstance = null;
     private int chance;
 
+    public void setNewRandom() {
+        Random rand = new Random();
+        chance = (rand.nextInt(4));
+    }
+
     private GameSound() throws SlickException {
-        this.selfDamage = new Sound("./audio/Oh_no.wav");;
-        this.attack = attack;
-        this.enemyDamage = enemyDamage;
-        this.bow = bow;
-        this.music = music;
-        this.death = death;
+        this.selfDamage = new Sound("./ressources/audio/Oh_no.wav");
+        switch(chance){
+            case 1: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack1.wav");
+                break;
+            case 2: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack2.wav");
+                break;
+            case 3: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack3.wav");
+                break;
+            case 4: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack4.wav");
+                break;
+        }
+        this.enemyDamage = new Sound("./ressources/audio/Oh_no.wav");
+        this.bow = new Sound("./ressources/audio/Oh_no.wav");
+        this.music = new Music("./ressources/audio/Arcade-Fantasy.mp3");
+        this.death = new Sound("./ressources/audio/Death_sound.mp3");
     }
     public static GameSound getInstance() throws SlickException {
         if (singleInstance == null)
             singleInstance = new GameSound();
-
         return singleInstance;
     }
 
@@ -34,22 +48,7 @@ public class GameSound {
         return selfDamage;
     }
 
-    public void setNewRandom() {
-        Random rand = new Random();
-        chance = (rand.nextInt(4));
-    }
     public Sound getAttack() throws SlickException{
-        switch(chance){
-            case 1: attack = new Sound("./audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack1.wav");
-                break;
-            case 2: attack = new Sound("./audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack2.wav");
-                break;
-            case 3: attack = new Sound("./audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack3.wav");
-                break;
-            case 4: attack = new Sound("./audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack4.wav");
-                break;
-        }
-        attack = new Sound("./audio/Oh_no.wav");
         return attack;
     }
 
@@ -58,17 +57,14 @@ public class GameSound {
     }
 
     public Sound getBow() throws SlickException{
-        bow = new Sound("./audio/Oh_no.wav");
         return bow;
     }
 
     public Music getMusic() throws SlickException {
-        music = new Music("./audio/Arcade-Fantasy.mp3");
         return music;
     }
 
     public Sound getDeath() throws SlickException{
-        death = new Sound("./audio/Death_sound.mp3");
         return death;
     }
 }
