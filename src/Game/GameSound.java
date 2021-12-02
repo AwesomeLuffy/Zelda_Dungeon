@@ -6,12 +6,12 @@ import java.util.Random;
 
 public class GameSound {
 
-    private Sound selfDamage;
+    private final Sound selfDamage;
     private Sound attack;
-    private Sound enemyDamage;
-    private Sound bow;
-    private Music music;
-    private Sound death;
+    private final Sound enemyDamage;
+    private final Sound bow;
+    private final Music music;
+    private final Sound death;
 
     private static GameSound singleInstance = null;
     private int chance;
