@@ -1,7 +1,5 @@
 package Game.Map;
 
-import Game.Animation.Animation;
-
 import java.util.ArrayList;
 import java.util.List;
 

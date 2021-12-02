@@ -1,12 +1,15 @@
 package Game;
 
 import org.jetbrains.annotations.NotNull;
+import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.state.BasicGameState;
 
 import java.awt.im.InputContext;
 
 public abstract class UserInteraction {
+
 
     public static boolean isToUpPressed(@NotNull GameContainer gameC){
         Input in = gameC.getInput();
