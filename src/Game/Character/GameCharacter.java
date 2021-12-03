@@ -1,5 +1,7 @@
 package Game.Character;
 
+import org.newdawn.slick.SlickException;
+
 public class GameCharacter {
 
     private final String name;
@@ -15,8 +17,14 @@ public class GameCharacter {
         return this.life;
     }
 
-    public void setLife(int life){
-        this.life = life;
+    public void setLife(int life){ this.life = life;
+    }
+
+    public void setDamage(int amount){
+        if((this.getLife() - amount) < 0){
+            this.setLife(0);
+        }
+        this.setLife(this.getLife() - amount);
     }
 
     public String getName(){
@@ -52,7 +60,7 @@ public class GameCharacter {
             return this.getThis();
         }
 
-        public GameCharacter build(){
+        public GameCharacter build() throws SlickException {
             return new GameCharacter(this);
         }
     }
