@@ -7,6 +7,8 @@ public class GameMapManager {
 
     private List<Map> allMap = new ArrayList<Map>();
 
+    private static final int TILES_SIZE = 32;
+
     private static GameMapManager gmm;
 
     private GameMapManager(){}
@@ -18,5 +20,9 @@ public class GameMapManager {
         }
 
         return gmm;
+    }
+
+    public static int getTilesSize(){
+        return TILES_SIZE;
     }
 }
