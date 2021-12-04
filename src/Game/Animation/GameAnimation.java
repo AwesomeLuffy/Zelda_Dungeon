@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
-public class GameAnimation implements Animations{
+public class GameAnimation{
     private final int tileSize;
     private final String name;
     private Animation animation;
