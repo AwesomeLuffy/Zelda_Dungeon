@@ -30,10 +30,10 @@ public class AnimationManager {
     }
 
     public void loadAnimation() throws SlickException {
-        this.allAnim.put("UP", new GameAnimation("UP", 32, new Point(6, 0)).getAnimation());
-        this.allAnim.put("DOWN", new GameAnimation("DOWN", 32, new Point(6, 1)).getAnimation());
-        this.allAnim.put("LEFT", new GameAnimation("LEFT", 32, new Point(6, 2)).getAnimation());
-        this.allAnim.put("RIGHT", new GameAnimation("RIGHT", 32, new Point(6, 3)).getAnimation());
+        this.allAnim.put("UP", new GameAnimation("DOWN", 32, new Point(6, 0)).getAnimation());
+        this.allAnim.put("DOWN", new GameAnimation("LEFT", 32, new Point(6, 1)).getAnimation());
+        this.allAnim.put("LEFT", new GameAnimation("RIGHT", 32, new Point(6, 2)).getAnimation());
+        this.allAnim.put("RIGHT", new GameAnimation("UP", 32, new Point(6, 3)).getAnimation());
     }
 
     public Animation getAnimationFromName(String name) throws SlickException {
