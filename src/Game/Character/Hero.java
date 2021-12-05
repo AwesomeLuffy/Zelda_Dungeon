@@ -7,6 +7,7 @@ import Game.GroupList;
 import Game.Map.GameMapManager;
 import org.lwjgl.Sys;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -82,21 +83,22 @@ public class Hero extends GameCharacter implements Character{
     }
 
     @Override
-    public void draw() throws SlickException{
-        this.draw(this.actualDirection);
+    public void draw(Graphics graphics) throws SlickException{
+        this.draw(graphics, this.actualDirection);
     }
 
     @Override
-    public void draw(Animations animations) throws SlickException {
-        this.draw(this.heroPosition, animations);
+    public void draw(Graphics graphics, Animations animations) throws SlickException {
+        this.draw(graphics, this.heroPosition, animations);
     }
 
     @Override
-    public void draw(Vector2f vector2f, Animations animations) throws SlickException {
+    public void draw(Graphics graphics, Vector2f vector2f, Animations animations) throws SlickException {
         this.am.getGroup(GroupList.HERO).getGameAnimation(animations).play(
                 new Vector2f(vector2f.getX() * GameMapManager.getTilesSize(),
                         vector2f.getY() * GameMapManager.getTilesSize())
         );
+        this.drawLife(graphics);
     }
 
     @Override
@@ -105,6 +107,41 @@ public class Hero extends GameCharacter implements Character{
             return this.am.getGroup(GroupList.HERO).getGameAnimation(animations);
         }
         return null;
+    }
+
+    private void drawLife(Graphics graphics){
+        float y = this.am.getGameImage("heartFull").getPosition().y;
+        float x = 1;
+
+        if(this.isAlive()) {
+            for (int i = 0; i < this.getLife(); i++) {
+
+                if (i % 10 == 0 && i != 0) {
+                    y++;
+                    x = 1;
+                }
+
+                this.am.getGameImage("heartFull").drawImage(
+                        new Vector2f(x, y),
+                        graphics);
+                x++;
+            }
+        }
+
+        if(this.getLife() != this.getInitialLife()) {
+            for (int i = this.getLife(); i < this.getInitialLife(); i++) {
+
+                if (i % 10 == 0 && i != 0 && (this.getLife() % 10 != 0 || this.getLife() % 10 == 0)) {
+                    y++;
+                    x = 1;
+                }
+
+                this.am.getGameImage("heartEmpty").drawImage(
+                        new Vector2f(x, y),
+                        graphics);
+                x++;
+            }
+        }
     }
 
     public static class Builder extends GameCharacter.Builder<Builder> {
