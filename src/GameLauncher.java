@@ -18,8 +18,6 @@ public class GameLauncher extends BasicGame{
 
     private Hero hero;
 
-    private boolean isKeyJustPressed = false;
-
     private int inputPressed;
 
     private Animations animations;
@@ -59,27 +57,16 @@ public class GameLauncher extends BasicGame{
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
 
-        if(!gameContainer.getInput().isKeyDown(this.inputPressed)){
-            this.isKeyJustPressed = false;
-        }
-
-        if(UserInteraction.isToRightPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveToRight(i);
-        }
-        else if(UserInteraction.isToLeftPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveToLeft(i);
-        }
-        else if(UserInteraction.isToDownPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveToDown(i);
-
-        }
-        else if(UserInteraction.isToUpPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveToUp(i);
-        }
-
-        if(UserInteraction.isAnyKeyDown(gameContainer).getKey()){
-            this.isKeyJustPressed = true;
-            this.inputPressed = UserInteraction.isAnyKeyDown(gameContainer).getValue();
+        if(UserInteraction.isKeyReleased(gameContainer)) {
+            if (UserInteraction.isToRightPressed(gameContainer).getKey()) {
+                this.hero.moveToRight(i);
+            } else if (UserInteraction.isToLeftPressed(gameContainer).getKey()) {
+                this.hero.moveToLeft(i);
+            } else if (UserInteraction.isToDownPressed(gameContainer).getKey()) {
+                this.hero.moveToDown(i);
+            } else if (UserInteraction.isToUpPressed(gameContainer).getKey()) {
+                this.hero.moveToUp(i);
+            }
         }
 
 
