@@ -1,93 +1,13 @@
 package Game;
 
-import org.jetbrains.annotations.NotNull;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.state.BasicGameState;
-
-import java.awt.im.InputContext;
-import java.util.HashMap;
 
 public abstract class UserInteraction {
 
     public static int input;
     private static boolean isKeyReleased;
-
-
-    public static boolean isToUpPressed(GameContainer gameC){
-        Input in = gameC.getInput();
-        UserInteraction.input = (in.isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z;
-        return in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_Z);
-    }
-
-    public static boolean isToDownPressed(GameContainer gameC){
-        Input in = gameC.getInput();
-        UserInteraction.input = (in.isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S;
-
-        return in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S);
-    }
-
-    public static boolean isToLeftPressed(GameContainer gameC){
-        Input in = gameC.getInput();
-        UserInteraction.input = (in.isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q;
-
-        return in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_Q);
-    }
-
-    public static boolean isToRightPressed(GameContainer gameC){
-        Input in = gameC.getInput();
-        UserInteraction.input = (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D;
-        return in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D);
-    }
-
-    public static boolean isSpacePressed(GameContainer gameC){
-        Input in = gameC.getInput();
-        UserInteraction.input = (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D;
-        return in.isKeyDown(Input.KEY_SPACE);
-    }
-
-    public static boolean isKeyReleased(GameContainer gameC){
-        if(UserInteraction.input != -1){
-            return gameC.getInput().isKeyDown(UserInteraction.input);
-        }
-        return false;
-    }
-
-    public static Pair<Boolean, Integer> isAnyKeyDown(GameContainer gameC){
-        if(isToUpPressed(gameC)){
-            return new Pair<Boolean, Integer>(
-                    true,
-                    ((gameC.getInput().isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z));
-        }
-
-        else if(isToDownPressed(gameC)){
-            return new Pair<Boolean, Integer>(
-                    true,
-                    ((gameC.getInput().isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S));
-        }
-
-        else if(isToLeftPressed(gameC)){
-            return new Pair<Boolean, Integer>(
-                    true,
-                    ((gameC.getInput().isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q));
-        }
-
-        else if(isToRightPressed(gameC)){
-            return new Pair<Boolean, Integer>(
-                    true,
-                    ((gameC.getInput().isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D));
-        }
-
-        else if(isSpacePressed(gameC)){
-            return new Pair<Boolean, Integer>(
-                    true,
-                    Input.KEY_SPACE);
-        }
-        else {
-            return new Pair<Boolean, Integer>(false, null);
-        }
-    }
+    public static int lastKeyPressed;
 
     public static class Pair<T1, T2> {
         private final T1 key;
@@ -106,5 +26,81 @@ public abstract class UserInteraction {
             return value;
         }
     }
+
+
+    public static Pair<Boolean, Integer> isToUpPressed(GameContainer gameC){
+        Input in = gameC.getInput();
+
+        UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_Z)) ?
+                (in.isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z : -1;
+
+        return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_Z)),
+                (in.isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z);
+    }
+
+    public static Pair<Boolean, Integer> isToDownPressed(GameContainer gameC){
+        Input in = gameC.getInput();
+        UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S)) ?
+                (in.isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S : -1;
+
+        return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S)),
+                (in.isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S);
+    }
+
+    public static Pair<Boolean, Integer> isToLeftPressed(GameContainer gameC){
+        Input in = gameC.getInput();
+        UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_Q)) ?
+                (in.isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q : -1;
+        return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_Q)),
+                (in.isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q);
+    }
+
+    public static Pair<Boolean, Integer> isToRightPressed(GameContainer gameC){
+        Input in = gameC.getInput();
+        UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D)) ?
+                (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D : -1;
+
+        return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D)),
+                (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D);
+    }
+
+    public static boolean isSpacePressed(GameContainer gameC){
+        Input in = gameC.getInput();
+        UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_SPACE)) ?
+                Input.KEY_SPACE : -1;
+        return in.isKeyDown(Input.KEY_SPACE);
+    }
+
+    public static boolean isKeyReleased(GameContainer gameC){
+        if(UserInteraction.lastKeyPressed != -1){
+            return !gameC.getInput().isKeyDown(UserInteraction.lastKeyPressed);
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    public static Pair<Boolean, Integer> isAnyKeyDown(GameContainer gameC){
+        if(isToRightPressed(gameC).getKey()){
+            return isToRightPressed(gameC);
+        }
+        else if(isToLeftPressed(gameC).getKey()){
+            return isToLeftPressed(gameC);
+        }
+        else if(isToUpPressed(gameC).getKey()){
+            return isToUpPressed(gameC);
+        }
+        else if(isToDownPressed(gameC).getKey()){
+            return isToDownPressed(gameC);
+        }
+        else if(isSpacePressed(gameC)){
+            return new Pair<Boolean, Integer>(true, Input.KEY_SPACE);
+        }
+
+        return new Pair<Boolean, Integer>(false, null);
+    }
+
+
 
 }
