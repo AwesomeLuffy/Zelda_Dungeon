@@ -3,7 +3,6 @@ import Game.*;
 import Game.Animation.AnimationManager;
 import Game.Character.CharacterWeapon;
 import Game.Character.Hero;
-import Game.Map.Map;
 import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
@@ -39,7 +38,7 @@ public class GameLauncher extends BasicGame{
         }
 
         this.am = AnimationManager.getInstance();
-        this.am.loadAnimation();
+        this.am.loadAnimations();
 
 
         this.hero = Hero.builder()
@@ -51,7 +50,6 @@ public class GameLauncher extends BasicGame{
 
         this.hero.setHeroPosition(new Vector2f(10,10));
 
-        this.animations = Animations.DOWN;
 
 
 
@@ -66,23 +64,17 @@ public class GameLauncher extends BasicGame{
         }
 
         if(UserInteraction.isToRightPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveHero(1, 0);
-            this.animations = Animations.RIGHT;
+            this.hero.moveToRight(i);
         }
         else if(UserInteraction.isToLeftPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveHero(-1, 0);
-            this.animations = Animations.LEFT;
-
+            this.hero.moveToLeft(i);
         }
         else if(UserInteraction.isToDownPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveHero(0, 1);
-            this.animations = Animations.DOWN;
+            this.hero.moveToDown(i);
 
         }
         else if(UserInteraction.isToUpPressed(gameContainer) && !isKeyJustPressed){
-            this.hero.moveHero(0, -1);
-            this.animations = Animations.UP;
-
+            this.hero.moveToUp(i);
         }
 
         if(UserInteraction.isAnyKeyDown(gameContainer).getKey()){
@@ -90,7 +82,6 @@ public class GameLauncher extends BasicGame{
             this.inputPressed = UserInteraction.isAnyKeyDown(gameContainer).getValue();
         }
 
-        this.hero.getAnimation(animations).update(i);
 
     }
 
@@ -98,7 +89,7 @@ public class GameLauncher extends BasicGame{
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         this.map.render(0,0);
 
-        this.hero.draw(this.animations);
+        this.hero.draw();
     }
 
     public AnimationManager getAnimationManager(){
