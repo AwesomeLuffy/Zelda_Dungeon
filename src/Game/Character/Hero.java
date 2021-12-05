@@ -1,7 +1,9 @@
 package Game.Character;
 
 import Game.Animation.AnimationManager;
+import Game.Animation.GameAnimation;
 import Game.Animations;
+import Game.GroupList;
 import Game.Map.GameMapManager;
 import org.lwjgl.Sys;
 import org.newdawn.slick.Animation;
@@ -18,16 +20,13 @@ public class Hero extends GameCharacter implements Character{
     private CharacterWeapon characterWeapon;
     private HashMap<Animations, Animation> heroAnimation = new HashMap<>();
     private Vector2f heroPosition;
+    private Animations actualDirection;
 
     public Hero(Builder builder) throws SlickException {
         super(builder);
 
-        this.heroAnimation.put(Animations.UP, this.am.getAnimationFromName("UP"));
-        this.heroAnimation.put(Animations.DOWN, this.am.getAnimationFromName("DOWN"));
-        this.heroAnimation.put(Animations.LEFT, this.am.getAnimationFromName("LEFT"));
-        this.heroAnimation.put(Animations.RIGHT, this.am.getAnimationFromName("RIGHT"));
-
         this.heroPosition = new Vector2f(0, 0);
+        this.actualDirection = Animations.DOWN;
     }
 
     public CharacterWeapon getCharacterWeapon() {
@@ -49,11 +48,33 @@ public class Hero extends GameCharacter implements Character{
         );
     }
 
-    public void moveHero(int x, int y){
+    public void moveHero(int x, int y, Animations animations, int i){
+
         this.setHeroPosition(new Vector2f(
                 this.getHeroPosition().getX() + x,
                 this.getHeroPosition().getY() + y)
         );
+
+        this.am.getGroup(GroupList.HERO).getGameAnimation(animations).update(i);
+
+        this.actualDirection = animations;
+
+    }
+
+    public void moveToUp(int i){
+        this.moveHero(0, -1, Animations.UP, i);
+    }
+
+    public void moveToDown(int i){
+        this.moveHero(0, 1, Animations.DOWN, i);
+    }
+
+    public void moveToLeft(int i){
+        this.moveHero(-1, 0, Animations.LEFT, i);
+    }
+
+    public void moveToRight(int i){
+        this.moveHero(1, 0, Animations.RIGHT, i);
     }
 
     public static Builder builder(){
@@ -61,22 +82,27 @@ public class Hero extends GameCharacter implements Character{
     }
 
     @Override
-    public void draw(Animations animations) {
-        this.getAnimation(animations).draw(
-                this.getHeroPosition().getX() * GameMapManager.getTilesSize(),
-                this.getHeroPosition().getY() * GameMapManager.getTilesSize()
+    public void draw() throws SlickException{
+        this.draw(this.actualDirection);
+    }
+
+    @Override
+    public void draw(Animations animations) throws SlickException {
+        this.draw(this.heroPosition, animations);
+    }
+
+    @Override
+    public void draw(Vector2f vector2f, Animations animations) throws SlickException {
+        this.am.getGroup(GroupList.HERO).getGameAnimation(animations).play(
+                new Vector2f(vector2f.getX() * GameMapManager.getTilesSize(),
+                        vector2f.getY() * GameMapManager.getTilesSize())
         );
     }
 
     @Override
-    public void draw(Vector2f vector2f, Animations animations){
-        this.getAnimation(animations).draw(vector2f.getX(), vector2f.getY());
-    }
-
-    @Override
-    public Animation getAnimation(Animations animations) {
-        if(this.heroAnimation.containsKey(animations)) {
-            return this.heroAnimation.get(animations);
+    public GameAnimation getAnimation(Animations animations) throws SlickException {
+        if(this.am.getGroup(GroupList.HERO).getGameAnimations().containsKey(animations)){
+            return this.am.getGroup(GroupList.HERO).getGameAnimation(animations);
         }
         return null;
     }
