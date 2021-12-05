@@ -35,6 +35,7 @@ public class AnimationManager {
     public void loadAnimations() throws SlickException {
         this.allAnimGroup.put(GroupList.HERO, new AnimationGroup(GroupList.HERO, 0, 6, 3));
         this.allAnimGroup.put(GroupList.Enemy, new AnimationGroup(GroupList.Enemy, 4, 3, 3));
+        this.allAnimGroup.put(GroupList.Boss, new AnimationGroup(GroupList.Enemy, 0, 3, 3));
     }
 
     public AnimationGroup getGroup(GroupList groupList){
