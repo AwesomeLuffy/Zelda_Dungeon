@@ -1,9 +1,12 @@
 package Game.Animation;
 
+import Game.Animations;
+import Game.GroupList;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Vector2f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class AnimationManager {
 
-    private HashMap<String, Animation> allAnim = new HashMap<String, Animation>();
+    private HashMap<GroupList, AnimationGroup> allAnimGroup = new HashMap<>();
 
     protected Image heroSprite;
 
@@ -29,17 +32,12 @@ public class AnimationManager {
         return am;
     }
 
-    public void loadAnimation() throws SlickException {
-        this.allAnim.put("UP", new GameAnimation("DOWN", 32, new Point(6, 0)).getAnimation());
-        this.allAnim.put("DOWN", new GameAnimation("LEFT", 32, new Point(6, 1)).getAnimation());
-        this.allAnim.put("LEFT", new GameAnimation("RIGHT", 32, new Point(6, 2)).getAnimation());
-        this.allAnim.put("RIGHT", new GameAnimation("UP", 32, new Point(6, 3)).getAnimation());
+    public void loadAnimations() throws SlickException {
+        this.allAnimGroup.put(GroupList.HERO, new AnimationGroup(GroupList.HERO, 0, 6, 3));
+        this.allAnimGroup.put(GroupList.Enemy, new AnimationGroup(GroupList.Enemy, 4, 3, 3));
     }
 
-    public Animation getAnimationFromName(String name) throws SlickException {
-        if(allAnim.containsKey(name)){
-            return allAnim.get(name);
-        }
-        return null;
+    public AnimationGroup getGroup(GroupList groupList){
+        return this.allAnimGroup.get(groupList);
     }
 }
