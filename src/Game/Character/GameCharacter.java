@@ -6,11 +6,13 @@ public class GameCharacter {
 
     private final String name;
     private int life;
+    private final int initialLife;
 
 
     protected GameCharacter(Builder<?> gameCharacterBuilder){
         this.name = gameCharacterBuilder.name;
         this.life = gameCharacterBuilder.life;
+        this.initialLife = gameCharacterBuilder.life;
     }
 
     public int getLife(){
@@ -20,11 +22,17 @@ public class GameCharacter {
     public void setLife(int life){ this.life = life;
     }
 
+    public int getInitialLife() {
+        return initialLife;
+    }
+
     public void setDamage(int amount){
         if((this.getLife() - amount) < 0){
             this.setLife(0);
         }
-        this.setLife(this.getLife() - amount);
+        else {
+            this.setLife(this.getLife() - amount);
+        }
     }
 
     public String getName(){
