@@ -5,9 +5,7 @@ import org.newdawn.slick.Input;
 
 public abstract class UserInteraction {
 
-    public static int input;
-    private static boolean isKeyReleased;
-    public static int lastKeyPressed;
+    private static int lastKeyPressed;
 
     public static class Pair<T1, T2> {
         private final T1 key;
@@ -35,7 +33,7 @@ public abstract class UserInteraction {
                 (in.isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z : -1;
 
         return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_UP) || in.isKeyDown(Input.KEY_Z)),
-                (in.isKeyDown(Input.KEY_UP)) ? Input.KEY_UP : Input.KEY_Z);
+                lastKeyPressed);
     }
 
     public static Pair<Boolean, Integer> isToDownPressed(GameContainer gameC){
@@ -44,7 +42,7 @@ public abstract class UserInteraction {
                 (in.isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S : -1;
 
         return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_DOWN) || in.isKeyDown(Input.KEY_S)),
-                (in.isKeyDown(Input.KEY_DOWN)) ? Input.KEY_DOWN : Input.KEY_S);
+                lastKeyPressed);
     }
 
     public static Pair<Boolean, Integer> isToLeftPressed(GameContainer gameC){
@@ -52,7 +50,7 @@ public abstract class UserInteraction {
         UserInteraction.lastKeyPressed = (in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_Q)) ?
                 (in.isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q : -1;
         return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_LEFT) || in.isKeyDown(Input.KEY_Q)),
-                (in.isKeyDown(Input.KEY_LEFT)) ? Input.KEY_LEFT : Input.KEY_Q);
+                lastKeyPressed);
     }
 
     public static Pair<Boolean, Integer> isToRightPressed(GameContainer gameC){
@@ -61,7 +59,7 @@ public abstract class UserInteraction {
                 (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D : -1;
 
         return new Pair<Boolean, Integer>((in.isKeyDown(Input.KEY_RIGHT) || in.isKeyDown(Input.KEY_D)),
-                (in.isKeyDown(Input.KEY_RIGHT)) ? Input.KEY_RIGHT : Input.KEY_D);
+                lastKeyPressed);
     }
 
     public static boolean isSpacePressed(GameContainer gameC){
