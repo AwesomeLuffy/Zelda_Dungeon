@@ -1,5 +1,6 @@
-package Game.Animation;
+Apackage Game.Animation;
 
+import Game.Map.GameMapManager;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -111,6 +112,10 @@ public class GameAnimation{
 
     public Animation getAnimation(){
         return this.animation;
+    }
+
+    public int getTotalDuration(){
+        return this.frameNumber * this.duration;
     }
 
     public void play(Vector2f vector2f){
