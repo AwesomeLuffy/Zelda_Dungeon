@@ -2,7 +2,7 @@ import Game.*;
 
 import Game.Animation.AnimationManager;
 import Game.Character.CharacterWeapon;
-import Game.Character.Hero;
+import Game.Character.Type.Hero;
 import Game.Map.GameMap;
 import Game.Map.GameMapManager;
 import org.lwjgl.Sys;
@@ -33,7 +33,7 @@ public class GameLauncher extends BasicGame{
     public void init(GameContainer gameContainer) throws SlickException {
 
         try {
-            this.map = new GameMap("Map1", "ressources/maps/map1.tmx");
+            this.map = new GameMap("Map2", "ressources/maps/map.tmx");
             //this.map = new TiledMap("ressources/maps/map1.tmx");
         }catch (Exception e){
             System.out.println(e.toString());
@@ -48,7 +48,7 @@ public class GameLauncher extends BasicGame{
                 .withWeapon(
                         CharacterWeapon.builder().withName("Epée de Thanos").withDamage(75).build())
                 .build();
-        this.hero.setHeroPosition(new Vector2f(22,12));
+        this.hero.setCharacterPosition(new Vector2f(22,12));
     }
 
     @Override
@@ -56,19 +56,19 @@ public class GameLauncher extends BasicGame{
 
         if(UserInteraction.isKeyReleased(gameContainer)) {
             if (UserInteraction.isToRightPressed(gameContainer).getKey()) {
-                if (this.map.canMoveToRight(this.hero.getHeroPosition())){
+                if (this.map.canMoveToRight(this.hero.getCharacterPosition())){
                     this.hero.moveToRight(i);
                 }
             } else if (UserInteraction.isToLeftPressed(gameContainer).getKey()) {
-                if (this.map.canMoveToLeft(this.hero.getHeroPosition())){
+                if (this.map.canMoveToLeft(this.hero.getCharacterPosition())){
                     this.hero.moveToLeft(i);
                 }
             } else if (UserInteraction.isToDownPressed(gameContainer).getKey()) {
-                if (this.map.canMoveToDown(this.hero.getHeroPosition())){
+                if (this.map.canMoveToDown(this.hero.getCharacterPosition())){
                     this.hero.moveToDown(i);
                 }
             } else if (UserInteraction.isToUpPressed(gameContainer).getKey()) {
-                if (this.map.canMoveToUp(this.hero.getHeroPosition())){
+                if (this.map.canMoveToUp(this.hero.getCharacterPosition())){
                     this.hero.moveToUp(i);
                 }
             }
