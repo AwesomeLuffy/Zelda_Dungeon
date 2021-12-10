@@ -1,4 +1,4 @@
-Apackage Game.Animation;
+package Game.Animation;
 
 import Game.Map.GameMapManager;
 import org.newdawn.slick.Animation;
