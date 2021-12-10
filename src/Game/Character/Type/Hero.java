@@ -1,20 +1,19 @@
-package Game.Character;
+package Game.Character.Type;
 
 import Game.Animation.AnimationManager;
 import Game.Animation.GameAnimation;
 import Game.Animations;
+import Game.Character.Character;
+import Game.Character.CharacterPower;
+import Game.Character.CharacterWeapon;
+import Game.Character.GameCharacter;
 import Game.GroupList;
 import Game.Map.GameMapManager;
-import org.lwjgl.Sys;
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import java.awt.*;
-import java.util.HashMap;
-
-public class Hero extends GameCharacter implements Character{
+public class Hero extends GameCharacter implements Character {
 
     private final AnimationManager am = AnimationManager.getInstance();
     private CharacterPower characterPower;
