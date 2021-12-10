@@ -1,18 +1,21 @@
 package Game.Character;
 
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 
 public class GameCharacter {
 
     private final String name;
     private int life;
     private final int initialLife;
+    private Vector2f characterPosition;
 
 
     protected GameCharacter(Builder<?> gameCharacterBuilder){
         this.name = gameCharacterBuilder.name;
         this.life = gameCharacterBuilder.life;
         this.initialLife = gameCharacterBuilder.life;
+        this.characterPosition = new Vector2f(0, 0);
     }
 
     public int getLife(){
@@ -24,6 +27,14 @@ public class GameCharacter {
 
     public int getInitialLife() {
         return initialLife;
+    }
+
+    public Vector2f getCharacterPosition() {
+        return characterPosition;
+    }
+
+    public void setCharacterPosition(Vector2f position){
+        this.characterPosition = position;
     }
 
     public void setDamage(int amount){

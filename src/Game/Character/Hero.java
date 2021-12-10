@@ -19,15 +19,13 @@ public class Hero extends GameCharacter implements Character{
     private final AnimationManager am = AnimationManager.getInstance();
     private CharacterPower characterPower;
     private CharacterWeapon characterWeapon;
-    private HashMap<Animations, Animation> heroAnimation = new HashMap<>();
-    private Vector2f heroPosition;
     private Animations actualDirection;
 
-    public Hero(Builder builder) throws SlickException {
+    private Hero(Builder builder) throws SlickException {
         super(builder);
 
-        this.heroPosition = new Vector2f(0, 0);
         this.actualDirection = Animations.DOWN;
+        this.characterWeapon = builder.characterWeapon;
     }
 
     public CharacterWeapon getCharacterWeapon() {
@@ -38,22 +36,12 @@ public class Hero extends GameCharacter implements Character{
         this.characterWeapon = characterWeapon;
     }
 
-    public Vector2f getHeroPosition() {
-        return heroPosition;
-    }
-
-    public void setHeroPosition(Vector2f heroPosition) {
-        this.heroPosition = new Vector2f(
-                ((int) heroPosition.getX()) ,
-                ((int) heroPosition.getY())
-        );
-    }
 
     public void moveHero(int x, int y, Animations animations, int i){
 
-        this.setHeroPosition(new Vector2f(
-                this.getHeroPosition().getX() + x,
-                this.getHeroPosition().getY() + y)
+        this.setCharacterPosition(new Vector2f(
+                this.getCharacterPosition().getX() + x,
+                this.getCharacterPosition().getY() + y)
         );
 
         this.am.getGroup(GroupList.HERO).getGameAnimation(animations).update(i);
@@ -89,7 +77,7 @@ public class Hero extends GameCharacter implements Character{
 
     @Override
     public void draw(Graphics graphics, Animations animations) throws SlickException {
-        this.draw(graphics, this.heroPosition, animations);
+        this.draw(graphics, this.getCharacterPosition(), animations);
     }
 
     @Override
