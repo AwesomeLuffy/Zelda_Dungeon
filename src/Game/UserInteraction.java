@@ -2,28 +2,29 @@ package Game;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import Game.Utils.Pair;
 
 public abstract class UserInteraction {
 
     private static int lastKeyPressed;
 
-    public static class Pair<T1, T2> {
-        private final T1 key;
-        private final T2 value;
-
-        public Pair(T1 first, T2 second) {
-            this.key = first;
-            this.value = second;
-        }
-
-        public T1 getKey() {
-            return key;
-        }
-
-        public T2 getValue() {
-            return value;
-        }
-    }
+//    public static class Pair<T1, T2> {
+//        private final T1 key;
+//        private final T2 value;
+//
+//        public Pair(T1 first, T2 second) {
+//            this.key = first;
+//            this.value = second;
+//        }
+//
+//        public T1 getKey() {
+//            return key;
+//        }
+//
+//        public T2 getValue() {
+//            return value;
+//        }
+//    }
 
 
     public static Pair<Boolean, Integer> isToUpPressed(GameContainer gameC){
