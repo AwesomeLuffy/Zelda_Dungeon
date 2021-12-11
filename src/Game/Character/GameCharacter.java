@@ -67,6 +67,7 @@ public class GameCharacter {
         private String name;
         private int life = 100;
 
+
         public abstract T getThis();
 
         public T name(String name){

@@ -7,36 +7,20 @@ import java.util.Random;
 public class GameSound {
 
     private final Sound selfDamage;
-    private Sound attack;
+    private final Sound attack;
     private final Sound enemyDamage;
-    private final Sound bow;
     private final Music music;
     private final Sound death;
 
     private static GameSound singleInstance = null;
-    private int chance;
 
-    public void setNewRandom() {
-        Random rand = new Random();
-        chance = (rand.nextInt(4));
-    }
 
     private GameSound() throws SlickException {
-        this.selfDamage = new Sound("./ressources/audio/Oh_no.wav");
-        switch(chance){
-            case 1: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack1.wav");
-                break;
-            case 2: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack2.wav");
-                break;
-            case 3: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack3.wav");
-                break;
-            case 4: this.attack = new Sound("./ressources/audio/LinkAttack/AdultLinkAttack/OOT_AdultLink_Attack4.wav");
-                break;
-        }
-        this.enemyDamage = new Sound("./ressources/audio/Oh_no.wav");
-        this.bow = new Sound("./ressources/audio/Oh_no.wav");
-        this.music = new Music("./ressources/audio/Arcade-Fantasy.mp3");
-        this.death = new Sound("./ressources/audio/Death_sound.mp3");
+        this.selfDamage = new Sound("ressources/audio/Oh_no.wav");
+        this.attack = new Sound("ressources/audio/short-fireball-woosh-6146.wav");
+        this.enemyDamage = new Sound("ressources/audio/Minecraft Oof.wav");
+        this.music = new Music("ressources/audio/Arcade-Fantasy.wav");
+        this.death = new Sound("ressources/audio/Death_sound.wav");
     }
     public static GameSound getInstance() throws SlickException {
         if (singleInstance == null)
@@ -45,26 +29,28 @@ public class GameSound {
     }
 
     public Sound getSelfDamage() throws SlickException{
+        selfDamage.play(1.0f, 0.025f);
         return selfDamage;
     }
 
     public Sound getAttack() throws SlickException{
+        attack.play(1.0f,0.05f);
         return attack;
     }
 
     public Sound getEnemyDamage() throws SlickException{
+        enemyDamage.play(1.0f,0.2f);
         return enemyDamage;
     }
 
-    public Sound getBow() throws SlickException{
-        return bow;
-    }
-
     public Music getMusic() throws SlickException {
+        music.loop();
+        music.setVolume(0.02f);
         return music;
     }
 
     public Sound getDeath() throws SlickException{
+        death.play(1.0f,0.05f);
         return death;
     }
 }

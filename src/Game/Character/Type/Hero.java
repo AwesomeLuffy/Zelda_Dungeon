@@ -169,6 +169,4 @@ public class Hero extends GameCharacter implements Character, Collisions {
             return new Hero(this);
         }
     }
-
-
 }
