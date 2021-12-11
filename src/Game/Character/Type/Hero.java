@@ -148,6 +148,4 @@ public class Hero extends GameCharacter implements Character {
             return new Hero(this);
         }
     }
-
-
 }

@@ -47,7 +47,6 @@ public class GameMap {
         return this.canMoveTo((int)heroPosition.getX(), (int)heroPosition.getY() - 1);
     }
 
-
     public boolean canMoveTo(int x, int y){
         boolean move;
         int indexClaqueBorder;
@@ -61,5 +60,22 @@ public class GameMap {
             move = false;
         }
         return move;
+    }
+
+    public boolean changeMap(Vector2f heroPosition){
+        int x = (int)heroPosition.getX();
+        int y = (int)heroPosition.getY();
+        boolean teleporting;
+        int indexClaqueDoor;
+        int tileId;
+        indexClaqueDoor = this.map.getLayerIndex("Door");
+        tileId = this.map.getTileId(x,y,indexClaqueDoor);
+        if (tileId == 0){
+            teleporting = false;
+        }
+        else {
+            teleporting = true;
+        }
+        return teleporting;
     }
 }
