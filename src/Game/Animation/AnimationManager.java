@@ -17,6 +17,7 @@ public class AnimationManager {
     protected Image bulletSprite;
     protected Image heartSpriteFull;
     protected Image getHeartSpriteEmpty;
+    protected Image assetsSprite;
 
     private static AnimationManager am;
 
@@ -36,6 +37,7 @@ public class AnimationManager {
 
         this.heroSprite = new Image("ressources/sprites/heroSprite.png");
         this.bulletSprite = new Image("ressources/sprites/bulletSprite.png");
+        this.assetsSprite = new Image("ressources/sprites/assetsF.png");
 
 
         this.allAnimGroup.put(GroupList.HERO, new AnimationGroup(this.heroSprite, GroupList.HERO, 0, 6, 3, false));
@@ -54,6 +56,7 @@ public class AnimationManager {
 
         this.allImage.put("heartFull", new GameImage("heartFull", new Image("ressources/sprites/heart32_32_FULL.png")));
         this.allImage.put("heartEmpty", new GameImage("heartEmpty", new Image("ressources/sprites/heart32_32_EMPTY.png")));
+        this.allImage.put("greyKey", new GameImage("greyKey", this.assetsSprite, new Vector2f(23, 39), 16));
     }
 
     public AnimationGroup getGroup(GroupList groupList){
