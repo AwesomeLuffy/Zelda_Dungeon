@@ -6,6 +6,8 @@ import Game.Animations;
 import Game.Character.Character;
 import Game.Character.CharacterPower;
 import Game.Character.CharacterWeapon;
+import Game.Character.Colision.Collisions;
+import Game.Character.Colision.GameCollisionManager;
 import Game.Character.GameCharacter;
 import Game.GroupList;
 import Game.Map.GameMapManager;
@@ -13,9 +15,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Hero extends GameCharacter implements Character {
+public class Hero extends GameCharacter implements Character, Collisions {
 
     private final AnimationManager am = AnimationManager.getInstance();
+    private final GameCollisionManager gameColisionManager = GameCollisionManager.getInstance();
     private CharacterPower characterPower;
     private CharacterWeapon characterWeapon;
     private Animations actualDirection;
@@ -25,6 +28,10 @@ public class Hero extends GameCharacter implements Character {
 
         this.actualDirection = Animations.DOWN;
         this.characterWeapon = builder.characterWeapon;
+
+        this.gameColisionManager.registerCol(this);
+
+        this.setColide();
     }
 
     public CharacterWeapon getCharacterWeapon() {
@@ -47,6 +54,7 @@ public class Hero extends GameCharacter implements Character {
 
         this.actualDirection = animations;
 
+        this.updateColide();
     }
 
     public void moveToUp(int i){
@@ -96,6 +104,8 @@ public class Hero extends GameCharacter implements Character {
         return null;
     }
 
+
+
     private void drawLife(Graphics graphics){
         float y = this.am.getGameImage("heartFull").getPosition().y;
         float x = 1;
@@ -130,6 +140,17 @@ public class Hero extends GameCharacter implements Character {
             }
         }
     }
+
+    @Override
+    public void setColide() {
+        this.gameColisionManager.addCollideObject(this, this.getCharacterPosition());
+    }
+
+    @Override
+    public void updateColide() {
+        this.gameColisionManager.updateColidePos(this, this.getCharacterPosition());
+    }
+
 
     public static class Builder extends GameCharacter.Builder<Builder> {
         private CharacterWeapon characterWeapon;
