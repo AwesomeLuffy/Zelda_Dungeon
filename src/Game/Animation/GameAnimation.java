@@ -119,7 +119,7 @@ public class GameAnimation{
     }
 
     public void play(Vector2f vector2f){
-        this.animation.draw(vector2f.getX(), vector2f.getY());
+        this.animation.draw(vector2f.getX() * GameMapManager.getTilesSize(), vector2f.getY() * GameMapManager.getTilesSize());
     }
 
     public void update(int i){
