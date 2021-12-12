@@ -30,7 +30,7 @@ public class GameCharacter {
     }
 
     public Vector2f getCharacterPosition() {
-        return characterPosition;
+        return new Vector2f(this.characterPosition);
     }
 
     public void setCharacterPosition(Vector2f position){
