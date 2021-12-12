@@ -39,8 +39,8 @@ public class Enemy extends GameCharacter implements Character {
     @Override
     public void draw(Graphics graphics, Vector2f vector2f, Animations animations) throws SlickException {
         this.am.getGroup(GroupList.Enemy).getGameAnimation(animations).play(
-                new Vector2f(vector2f.getX() * GameMapManager.getTilesSize(),
-                        vector2f.getY() * GameMapManager.getTilesSize())
+                new Vector2f(vector2f.getX(),
+                        vector2f.getY())
         );
         this.drawLife(graphics, vector2f);
     }
