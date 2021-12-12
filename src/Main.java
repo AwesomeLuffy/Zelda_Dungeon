@@ -16,7 +16,6 @@ public class Main {
             AppGameContainer app = new AppGameContainer(new GameLauncher("ZeldaDungeon"));
             app.setDisplayMode(largeurScreen, hauteurScreen, isFullscreen);
             app.setTargetFrameRate(60);
-
             app.start();
         } catch (SlickException e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);

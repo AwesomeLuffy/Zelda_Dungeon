@@ -18,6 +18,7 @@ public class GameLauncher extends BasicGame{
     private GameMap map2;
     private GameMap mapAcutely;
     private int state;
+    public boolean atKey;
 
     private AnimationManager am = AnimationManager.getInstance();
     private GameCollisionManager gameCollisionManager = GameCollisionManager.getInstance();
@@ -39,6 +40,7 @@ public class GameLauncher extends BasicGame{
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         this.state = 1;
+        this.atKey = false;
         try {
             this.map1 = new GameMap("Map1", "ressources/maps/map1.tmx");
             this.map2 = new GameMap("Map2", "ressources/maps/map2.tmx");
@@ -74,31 +76,31 @@ public class GameLauncher extends BasicGame{
 
         this.delta+=i;
 
-        if (this.mapAcutely.changeMap(this.hero.getCharacterPosition())){
+        if (this.mapAcutely.changeMap(this.hero.getCharacterPosition()) && this.atKey){
             if (this.mapAcutely == this.map1){
                 this.state = 2;
-                this.hero.setCharacterPosition(new Vector2f(13, 22));
+                this.hero.setCharacterPosition(new Vector2f(12, 22));
             }
             else if (this.mapAcutely == this.map2){
                 this.state = 1;
-                this.hero.setCharacterPosition(new Vector2f(13,1));
+                this.hero.setCharacterPosition(new Vector2f(12,1));
             }
         }
         if(UserInteraction.isKeyReleased(gameContainer)) {
             if (UserInteraction.isToRightPressed(gameContainer).getKey()) {
-                if (this.mapAcutely.canMoveToRight(this.hero.getCharacterPosition())){
+                if (this.mapAcutely.canMoveToRight(this.hero.getCharacterPosition(), this.atKey)){
                     this.hero.moveToRight(i);
                 }
             } else if (UserInteraction.isToLeftPressed(gameContainer).getKey()) {
-                if (this.mapAcutely.canMoveToLeft(this.hero.getCharacterPosition())){
+                if (this.mapAcutely.canMoveToLeft(this.hero.getCharacterPosition(), this.atKey)){
                     this.hero.moveToLeft(i);
                 }
             } else if (UserInteraction.isToDownPressed(gameContainer).getKey()) {
-                if (this.mapAcutely.canMoveToDown(this.hero.getCharacterPosition())){
+                if (this.mapAcutely.canMoveToDown(this.hero.getCharacterPosition(), this.atKey)){
                     this.hero.moveToDown(i);
                 }
             } else if (UserInteraction.isToUpPressed(gameContainer).getKey()) {
-                if (this.mapAcutely.canMoveToUp(this.hero.getCharacterPosition())){
+                if (this.mapAcutely.canMoveToUp(this.hero.getCharacterPosition(), this.atKey)){
                     this.hero.moveToUp(i);
                 }
             }
@@ -123,7 +125,25 @@ public class GameLauncher extends BasicGame{
 
         this.mapAcutely.render();
         this.hero.draw(graphics);
-        this.enemy.draw(graphics);
+        if (state == 1){
+            this.enemy.setLife(0);//Death of Enemy
+            if (!this.enemy.isAlive()){
+                if(this.atKey == false){
+                    this.am.getGameImage("greyKey").drawImage(new Vector2f(10,15),graphics);
+                }
+                if (this.hero.getCharacterPosition().getX() == 10 && this.hero.getCharacterPosition().getY() == 15){
+                    this.atKey = true;
+                }
+            }
+            else {
+                this.enemy.draw(graphics);
+            }
+            if(this.atKey == false){
+                this.am.getGameImage("woodLog").drawImage(new Vector2f(11,0),graphics);
+                this.am.getGameImage("woodLog").drawImage(new Vector2f(12,0),graphics);
+                this.am.getGameImage("woodLog").drawImage(new Vector2f(13,0),graphics);
+            }
+        }
 
         if (this.justAttack) {
              this.hero.getCharacterWeapon().draw(this.hero.getCharacterPosition(), this.hero.getActualDirection());
@@ -132,7 +152,6 @@ public class GameLauncher extends BasicGame{
         this.gameCollisionManager.getGameColision(this.hero).drawRect(graphics);
 
     }
-
     public AnimationManager getAnimationManager(){
         return this.am;
     }

@@ -7,6 +7,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class GameMap {
     private TiledMap map;
     private String name;
+//    private boolean ifKey;
     //private TiledMap map2;
     private static final int TILES_SIZE = 32;
 
@@ -31,30 +32,32 @@ public class GameMap {
         return TILES_SIZE;
     }
 
-    public boolean canMoveToRight(Vector2f heroPosition){
-        return this.canMoveTo((int)heroPosition.getX() + 1, (int)heroPosition.getY());
+    public boolean canMoveToRight(Vector2f heroPosition, boolean ifKey){
+        return this.canMoveTo((int)heroPosition.getX() + 1, (int)heroPosition.getY(), ifKey);
     }
 
-    public boolean canMoveToLeft(Vector2f heroPosition){
-        return this.canMoveTo((int)heroPosition.getX() - 1, (int)heroPosition.getY());
+    public boolean canMoveToLeft(Vector2f heroPosition, boolean ifKey){
+        return this.canMoveTo((int)heroPosition.getX() - 1, (int)heroPosition.getY(), ifKey);
     }
 
-    public boolean canMoveToDown(Vector2f heroPosition){
-        return this.canMoveTo((int)heroPosition.getX(), (int)heroPosition.getY() + 1);
+    public boolean canMoveToDown(Vector2f heroPosition, boolean ifKey){
+        return this.canMoveTo((int)heroPosition.getX(), (int)heroPosition.getY() + 1, ifKey);
     }
 
-    public boolean canMoveToUp(Vector2f heroPosition){
-        return this.canMoveTo((int)heroPosition.getX(), (int)heroPosition.getY() - 1);
+    public boolean canMoveToUp(Vector2f heroPosition, boolean ifKey){
+        return this.canMoveTo((int)heroPosition.getX(), (int)heroPosition.getY() - 1, ifKey);
     }
 
-    public boolean canMoveTo(int x, int y){
-        boolean move;
+    public boolean canMoveTo(int x, int y, boolean ifKey){
+        boolean move = false;
         int indexClaqueBorder;
         int tileId;
         indexClaqueBorder = this.map.getLayerIndex("Border");
         tileId = this.map.getTileId(x,y,indexClaqueBorder);
         if (tileId == 0){
-            move = true;
+            if (ifKey == false && (x == 11 || x == 12 || x ==13) && y == 0){
+            }
+            else { move = true; }
         }
         else {
             move = false;

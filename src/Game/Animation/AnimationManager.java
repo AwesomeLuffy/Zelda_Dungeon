@@ -18,6 +18,7 @@ public class AnimationManager {
     protected Image heartSpriteFull;
     protected Image getHeartSpriteEmpty;
     protected Image assetsSprite;
+    protected Image forestTiles;
 
     private static AnimationManager am;
 
@@ -38,7 +39,7 @@ public class AnimationManager {
         this.heroSprite = new Image("ressources/sprites/heroSprite.png");
         this.bulletSprite = new Image("ressources/sprites/bulletSprite.png");
         this.assetsSprite = new Image("ressources/sprites/assetsF.png");
-
+        this.forestTiles = new Image("ressources/maps/forest_tiles.png");
 
         this.allAnimGroup.put(GroupList.HERO, new AnimationGroup(this.heroSprite, GroupList.HERO, 0, 6, 3, false));
         this.allAnimGroup.put(GroupList.Enemy, new AnimationGroup(this.heroSprite, GroupList.Enemy, 4, 3, 3, false));
@@ -57,6 +58,10 @@ public class AnimationManager {
         this.allImage.put("heartFull", new GameImage("heartFull", new Image("ressources/sprites/heart32_32_FULL.png")));
         this.allImage.put("heartEmpty", new GameImage("heartEmpty", new Image("ressources/sprites/heart32_32_EMPTY.png")));
         this.allImage.put("greyKey", new GameImage("greyKey", this.assetsSprite, new Vector2f(23, 39), 16));
+//        this.allImage.put("door1", new GameImage("door1", this.assetsSprite, new Vector2f(4,10),16));
+//        this.allImage.put("door2", new GameImage("door2", this.assetsSprite, new Vector2f(5,10),16));
+//        this.allImage.put("woodLog1",new GameImage("woodLog1", this.forestTiles, new Vector2f(11,2),32));
+        this.allImage.put("woodLog",new GameImage("woodLog", this.forestTiles, new Vector2f(14,1),32));
     }
 
     public AnimationGroup getGroup(GroupList groupList){
