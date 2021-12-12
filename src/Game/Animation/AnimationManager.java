@@ -44,10 +44,10 @@ public class AnimationManager {
         this.allAnimGroup.put(GroupList.Enemy, new AnimationGroup(this.heroSprite, GroupList.Enemy, 4, 3, 3, false));
         this.allAnimGroup.put(GroupList.Boss, new AnimationGroup(this.heroSprite, GroupList.Enemy, 0, 3, 3, false));
 
-        this.uniqueAnim.put("Bullet", GameAnimation.builder()
+        this.uniqueAnim.put("FireEnergy", GameAnimation.builder()
                 .withSprite(this.bulletSprite)
                 .withSpritePos(new Vector2f(0, 6))
-                .withDuration(100)
+                .withDuration(200)
                 .withTileSize(32)
                 .withFrameNumber(4)
                 .withName("Bullet")
