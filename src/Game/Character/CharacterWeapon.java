@@ -1,14 +1,37 @@
 package Game.Character;
 
+import Game.Animation.AnimationManager;
+import Game.Animation.GameAnimation;
+import Game.Animations;
+import Game.Character.Type.Hero;
+import Game.GroupList;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
+
+import java.util.Objects;
+
 public class CharacterWeapon {
     private final String name;
+    private static AnimationManager am;
     private int damage;
     private final boolean isProjectile;
+    private String animation;
 
-    private CharacterWeapon(WeaponBuilder weaponBuilder){
+    static {
+        try {
+            am = AnimationManager.getInstance();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private CharacterWeapon(WeaponBuilder weaponBuilder) throws SlickException {
         this.name = weaponBuilder.name;
         this.damage = weaponBuilder.damage;
         this.isProjectile = weaponBuilder.isProjectile;
+        this.animation = weaponBuilder.animation;
     }
 
     public static WeaponBuilder builder(){
@@ -19,11 +42,13 @@ public class CharacterWeapon {
         private String name;
         private int damage;
         private boolean isProjectile;
+        private String animation;
 
         public WeaponBuilder(){
             this.name = "Super Arme";
             this.damage = 20;
             this.isProjectile = false;
+            this.animation = "";
         }
 
         public WeaponBuilder withName(String _name){
@@ -36,12 +61,17 @@ public class CharacterWeapon {
             return this;
         }
 
-        public WeaponBuilder isProjectile(){
+        public WeaponBuilder setProjectile(){
             this.isProjectile = true;
             return this;
         }
 
-        public CharacterWeapon build(){
+        public WeaponBuilder withAnimation(String animationName){
+            this.animation = animationName;
+            return this;
+        }
+
+        public CharacterWeapon build() throws SlickException {
             return new CharacterWeapon(this);
         }
     }
@@ -61,4 +91,14 @@ public class CharacterWeapon {
     public boolean isProjectile() {
         return isProjectile;
     }
+
+    public GameAnimation getAnimation(){
+        return (!this.animation.equals("")) ? am.getUniqueAnimation(this.animation) : null;
+    }
+
+    public void draw(Vector2f position, Animations direction){
+        this.getAnimation().play(
+                position.add(Hero.ADDPOS.get(direction)));
+    }
+
 }
