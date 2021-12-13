@@ -11,6 +11,7 @@ public class GameSound {
     private final Sound enemyDamage;
     private final Music music;
     private final Sound death;
+    private final Sound theWilhelmScream;
 
     private static GameSound singleInstance = null;
 
@@ -21,6 +22,7 @@ public class GameSound {
         this.enemyDamage = new Sound("ressources/audio/Minecraft Oof.wav");
         this.music = new Music("ressources/audio/Arcade-Fantasy.wav");
         this.death = new Sound("ressources/audio/Death_sound.wav");
+        this.theWilhelmScream = new Sound("ressources/audio/Wilhelm_Scream.wav");
     }
     public static GameSound getInstance() throws SlickException {
         if (singleInstance == null)
@@ -49,8 +51,17 @@ public class GameSound {
         return music;
     }
 
-    public Sound getDeath() throws SlickException{
-        death.play(1.0f,0.05f);
+    public Sound getDeath(boolean play) throws SlickException{
+        if (play){
+            death.play(1.0f,0.05f);
+        }
         return death;
+    }
+
+    public Sound getTheWilhelmScream(boolean play) throws SlickException{
+        if (play){
+            theWilhelmScream.play(1.0f,0.2f);
+        }
+        return theWilhelmScream;
     }
 }

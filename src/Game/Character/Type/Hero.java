@@ -9,6 +9,7 @@ import Game.Character.CharacterWeapon;
 import Game.Character.Colision.Collisions;
 import Game.Character.Colision.GameCollisionManager;
 import Game.Character.GameCharacter;
+import Game.GameSound;
 import Game.GroupList;
 import Game.Map.GameMapManager;
 import org.lwjgl.Sys;
@@ -40,12 +41,9 @@ public class Hero extends GameCharacter implements Character, Collisions {
 
     private Hero(Builder builder) throws SlickException {
         super(builder);
-
         this.actualDirection = Animations.DOWN;
         this.characterWeapon = builder.characterWeapon;
-
         this.gameColisionManager.registerCol(this);
-
         this.setColide();
     }
 
@@ -57,18 +55,14 @@ public class Hero extends GameCharacter implements Character, Collisions {
         this.characterWeapon = characterWeapon;
     }
 
-
     public void moveHero(Vector2f addPos, Animations animations, int i){
-
         this.setCharacterPosition(new Vector2f(
                 this.getCharacterPosition().getX() + addPos.getX(),
                 this.getCharacterPosition().getY() + addPos.getY())
         );
 
         this.am.getGroup(GroupList.HERO).getGameAnimation(animations).update(i);
-
         this.actualDirection = animations;
-
         this.updateColide();
     }
 
@@ -119,15 +113,12 @@ public class Hero extends GameCharacter implements Character, Collisions {
         return null;
     }
 
-
-
     private void drawLife(Graphics graphics){
         float y = this.am.getGameImage("heartFull").getPosition().y;
         float x = 1;
 
         if(this.isAlive()) {
             for (int i = 0; i < this.getLife(); i++) {
-
                 if (i % 10 == 0 && i != 0) {
                     y++;
                     x = 1;
@@ -142,7 +133,6 @@ public class Hero extends GameCharacter implements Character, Collisions {
 
         if(this.getLife() != this.getInitialLife()) {
             for (int i = this.getLife(); i < this.getInitialLife(); i++) {
-
                 if (i % 10 == 0 && i != 0 && (this.getLife() % 10 != 0 || this.getLife() % 10 == 0)) {
                     y++;
                     x = 1;
@@ -156,9 +146,10 @@ public class Hero extends GameCharacter implements Character, Collisions {
         }
     }
 
-    public void attack(GameCharacter gameCharacter){
+    public void attack(GameCharacter gameCharacter) throws SlickException {
         if(new Vector2f(this.getCharacterPosition()).add(ADDPOS.get(this.getActualDirection())).equals(gameCharacter.getCharacterPosition())) {
             if (gameCharacter.isAlive()) {
+                GameSound.getInstance().getEnemyDamage();
                 gameCharacter.setDamage(this.getCharacterWeapon().getDamage());
             }
         }

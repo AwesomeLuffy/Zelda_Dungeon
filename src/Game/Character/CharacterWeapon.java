@@ -3,6 +3,7 @@ package Game.Character;
 import Game.Animation.AnimationManager;
 import Game.Animation.GameAnimation;
 import Game.Animations;
+import Game.Character.Type.Boss;
 import Game.Character.Type.Hero;
 import Game.GroupList;
 import org.newdawn.slick.Animation;
@@ -101,4 +102,16 @@ public class CharacterWeapon {
                 position.add(Hero.ADDPOS.get(direction)));
     }
 
+    public void draw(Vector2f position){
+        Vector2f vector2f = position.copy();
+        this.getAnimation().play(position.add(Hero.ADDPOS.get(Animations.UP)));
+        position.add(Hero.ADDPOS.get(Animations.UP).negate());
+        this.getAnimation().play(position.add(Hero.ADDPOS.get(Animations.DOWN)));
+        position.add(Hero.ADDPOS.get(Animations.DOWN).negate());
+        this.getAnimation().play(position.add(Hero.ADDPOS.get(Animations.RIGHT)));
+        position.add(Hero.ADDPOS.get(Animations.RIGHT).negate());
+        this.getAnimation().play(position.add(Hero.ADDPOS.get(Animations.LEFT)));
+        position.add(Hero.ADDPOS.get(Animations.LEFT).negate());
+
+    }
 }

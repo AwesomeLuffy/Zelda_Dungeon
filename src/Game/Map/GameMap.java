@@ -1,5 +1,6 @@
 package Game.Map;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
@@ -7,8 +8,6 @@ import org.newdawn.slick.tiled.TiledMap;
 public class GameMap {
     private TiledMap map;
     private String name;
-//    private boolean ifKey;
-    //private TiledMap map2;
     private static final int TILES_SIZE = 32;
 
     public GameMap(String name, String path) throws SlickException {
@@ -55,12 +54,8 @@ public class GameMap {
         indexClaqueBorder = this.map.getLayerIndex("Border");
         tileId = this.map.getTileId(x,y,indexClaqueBorder);
         if (tileId == 0){
-            if (ifKey == false && (x == 11 || x == 12 || x ==13) && y == 0){
-            }
+            if (ifKey == false && (x == 11 || x == 12 || x == 13) && y == 0){}
             else { move = true; }
-        }
-        else {
-            move = false;
         }
         return move;
     }
