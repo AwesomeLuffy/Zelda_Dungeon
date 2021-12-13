@@ -7,7 +7,6 @@ import Game.Character.Type.Boss;
 import Game.Character.Type.Hero;
 import Game.Character.Type.Enemy;
 import Game.Map.GameMap;
-import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -21,8 +20,8 @@ public class GameLauncher extends BasicGame{
     private int state;
     public boolean atKey;
 
-    private AnimationManager am = AnimationManager.getInstance();
-    private GameCollisionManager gameCollisionManager = GameCollisionManager.getInstance();
+    private final AnimationManager am = AnimationManager.getInstance();
+    private final GameCollisionManager gameCollisionManager = GameCollisionManager.getInstance();
 
     private Hero hero;
     private Enemy enemy;
@@ -63,7 +62,7 @@ public class GameLauncher extends BasicGame{
                 .name("Light Knight")
                 .withLife(3)
                 .withWeapon(
-                        CharacterWeapon.builder().withName("Epée de Thanos").withDamage(75).withAnimation("FireEnergy").build())
+                        CharacterWeapon.builder().withName("Sword of  Thanos").withDamage(75).withAnimation("FireEnergy").build())
                 .build();
         this.hero.setCharacterPosition(new Vector2f(22,12));
 
@@ -82,7 +81,7 @@ public class GameLauncher extends BasicGame{
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         if(this.delta >= this.hero.getCharacterWeapon().getAnimation().getTotalDuration()){
-            this.justAttack = (this.justAttack) ? false : this.justAttack;
+            this.justAttack =  (this.justAttack) ? false : this.justAttack;
             this.delta = 0;
         }
 
@@ -99,10 +98,6 @@ public class GameLauncher extends BasicGame{
 
         if (!this.canAttack){
             this.gamma+=i;
-        }
-
-        if(!this.hero.isAlive()){
-            System.exit(0);
         }
 
         if (this.mapAcutely.changeMap(this.hero.getCharacterPosition()) && this.atKey){
@@ -143,6 +138,7 @@ public class GameLauncher extends BasicGame{
                 this.delta = 0;
                 GameSound.getInstance().getAttack();
             }
+
             if (this.state == 2 && this.attackBoss && this.boss.isAlive()){
                 if (this.canAttack){
                     this.boss.attack(hero);
@@ -169,6 +165,7 @@ public class GameLauncher extends BasicGame{
         }
 
         this.mapAcutely.render();
+
         if (this.hero.isAlive()){
             this.heroDeath = true;
             this.hero.draw(graphics);
@@ -176,30 +173,34 @@ public class GameLauncher extends BasicGame{
         else {
             GameSound.getInstance().getDeath(this.heroDeath);
             this.heroDeath = false;
+            System.exit(0);
         }
-        if (state == 1){
 
-            if (!this.enemy.isAlive()){
-                if(!this.atKey){
-                    this.am.getGameImage("greyKey").drawImage(new Vector2f(10,15),graphics);
-                }
-                if (this.hero.getCharacterPosition().getX() == 10 && this.hero.getCharacterPosition().getY() == 15){
-                    this.atKey = true;
-                }
-                GameSound.getInstance().getTheWilhelmScream(this.enemyDeath);
-                this.enemyDeath = false;
-            }
-            else {
+        if (state == 1){
+            if (this.enemy.isAlive()){
                 this.enemyDeath = true;
                 this.enemy.draw(graphics);
             }
+            else {
+                if (!this.atKey){
+                    this.am.getGameImage("greyKey").drawImage(new Vector2f(10,15),graphics);
+                }
+
+                if (this.hero.getCharacterPosition().getX() == 10 && this.hero.getCharacterPosition().getY() == 15){
+                    this.atKey = true;
+                }
+
+                GameSound.getInstance().getTheWilhelmScream(this.enemyDeath);
+                this.enemyDeath = false;
+            }
+
             if(!this.atKey){
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(11,0),graphics);
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(12,0),graphics);
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(13,0),graphics);
             }
         }
-        if (state == 2) {
+        else  {
             if (this.boss == null){
                 this.boss = Boss.builder()
                 .withLife(500)
@@ -207,6 +208,7 @@ public class GameLauncher extends BasicGame{
                         CharacterWeapon.builder().withName("Dragon Death Sword").withDamage(1).withAnimation("FireEnergy").build()).build();
                 this.boss.setCharacterPosition(new Vector2f(29,15));
             }
+
             if (this.boss.isAlive()){
                 this.bossDeath = true;
                 this.boss.draw(graphics);
@@ -219,10 +221,10 @@ public class GameLauncher extends BasicGame{
                 this.bossDeath = false;
             }
         }
+
         if (this.justAttack) {
              this.hero.getCharacterWeapon().draw(this.hero.getCharacterPosition(), this.hero.getActualDirection());
         }
-//        this.gameCollisionManager.getGameColision(this.hero).drawRect(graphics);
     }
 
     public AnimationManager getAnimationManager(){
