@@ -23,18 +23,14 @@ public class Boss  extends GameCharacter implements Character {
     private Animations actualDirection;
     private CharacterWeapon characterWeapon;
 
+    public static Builder builder(){
+        return new Boss.Builder();
+    }
+
     private Boss(Boss.Builder builder) throws SlickException {
         super(builder);
         this.actualDirection = Animations.DOWN;
         this.characterWeapon = builder.characterWeapon;
-    }
-
-    public CharacterWeapon getCharacterWeapon() {
-        return characterWeapon;
-    }
-
-    public static Boss.Builder builder(){
-        return new Boss.Builder();
     }
 
     @Override
@@ -64,18 +60,12 @@ public class Boss  extends GameCharacter implements Character {
         return null;
     }
 
-    private void drawLife(Graphics graphics){
-        if(this.isAlive()){
-            String chars = Integer.toString(this.getLife()) + "/" + this.getInitialLife();
+    public Animations getActualDirection() {
+        return actualDirection;
+    }
 
-            Rectangle rectangle = new Rectangle(
-                    this.getCharacterPosition().getX() * GameMapManager.getTilesSize(), (this.getCharacterPosition().getY() - 1 ) * GameMapManager.getTilesSize(),
-                    GameMapManager.getTilesSize(), GameMapManager.getTilesSize());
-
-            graphics.drawString(chars,
-                    (rectangle.getX() + rectangle.getWidth() / 2) - (graphics.getFont().getWidth(chars) / 2),
-                    (rectangle.getY() + rectangle.getHeight() / 2) - (graphics.getFont().getHeight(chars) / 2) );
-        }
+    public CharacterWeapon getCharacterWeapon() {
+        return characterWeapon;
     }
 
     public void attack(GameCharacter gameCharacter) throws SlickException {
@@ -89,8 +79,18 @@ public class Boss  extends GameCharacter implements Character {
         }
     }
 
-    public Animations getActualDirection() {
-        return actualDirection;
+    private void drawLife(Graphics graphics){
+        if(this.isAlive()){
+            String chars = Integer.toString(this.getLife()) + "/" + this.getInitialLife();
+
+            Rectangle rectangle = new Rectangle(
+                    this.getCharacterPosition().getX() * GameMapManager.getTilesSize(), (this.getCharacterPosition().getY() - 1 ) * GameMapManager.getTilesSize(),
+                    GameMapManager.getTilesSize(), GameMapManager.getTilesSize());
+
+            graphics.drawString(chars,
+                    (rectangle.getX() + rectangle.getWidth() / 2) - (graphics.getFont().getWidth(chars) / 2),
+                    (rectangle.getY() + rectangle.getHeight() / 2) - (graphics.getFont().getHeight(chars) / 2) );
+        }
     }
 
     public static  class Builder extends GameCharacter.Builder<Boss.Builder>{

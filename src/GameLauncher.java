@@ -7,6 +7,7 @@ import Game.Character.Type.Boss;
 import Game.Character.Type.Hero;
 import Game.Character.Type.Enemy;
 import Game.Map.GameMap;
+import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -57,6 +58,7 @@ public class GameLauncher extends BasicGame{
         }
 
         this.am.load();
+
         this.hero = Hero.builder()
                 .name("Light Knight")
                 .withLife(3)
@@ -64,10 +66,14 @@ public class GameLauncher extends BasicGame{
                         CharacterWeapon.builder().withName("Epée de Thanos").withDamage(75).withAnimation("FireEnergy").build())
                 .build();
         this.hero.setCharacterPosition(new Vector2f(22,12));
+
         this.enemy = Enemy.builder().withLife(100).build();
         this.enemy.setCharacterPosition(new Vector2f(32,15));
+
         this.gameCollisionManager.initCollides();
+
         GameSound.getInstance().getMusic();
+
         this.gamma = 0;
         this.previousLife = this.hero.getLife();
         this.canAttack = true;
@@ -79,6 +85,7 @@ public class GameLauncher extends BasicGame{
             this.justAttack = (this.justAttack) ? false : this.justAttack;
             this.delta = 0;
         }
+
         if (this.alpha >= 1600) {
             this.attackBoss = false;
             if (this.alpha >= 3200){
@@ -86,10 +93,16 @@ public class GameLauncher extends BasicGame{
                 this.attackBoss = true;
             }
         }
+
         this.delta+=i;
         this.alpha+=i;
+
         if (!this.canAttack){
             this.gamma+=i;
+        }
+
+        if(!this.hero.isAlive()){
+            System.exit(0);
         }
 
         if (this.mapAcutely.changeMap(this.hero.getCharacterPosition()) && this.atKey){
@@ -102,6 +115,7 @@ public class GameLauncher extends BasicGame{
                 this.hero.setCharacterPosition(new Vector2f(12,1));
             }
         }
+
         if(UserInteraction.isKeyReleased(gameContainer)) {
             if (UserInteraction.isToRightPressed(gameContainer).getKey()) {
                 if (this.mapAcutely.canMoveToRight(this.hero.getCharacterPosition(), this.atKey)){
@@ -166,7 +180,7 @@ public class GameLauncher extends BasicGame{
         if (state == 1){
 
             if (!this.enemy.isAlive()){
-                if(this.atKey == false){
+                if(!this.atKey){
                     this.am.getGameImage("greyKey").drawImage(new Vector2f(10,15),graphics);
                 }
                 if (this.hero.getCharacterPosition().getX() == 10 && this.hero.getCharacterPosition().getY() == 15){
@@ -179,7 +193,7 @@ public class GameLauncher extends BasicGame{
                 this.enemyDeath = true;
                 this.enemy.draw(graphics);
             }
-            if(this.atKey == false){
+            if(!this.atKey){
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(11,0),graphics);
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(12,0),graphics);
                 this.am.getGameImage("woodLog").drawImage(new Vector2f(13,0),graphics);
@@ -210,6 +224,7 @@ public class GameLauncher extends BasicGame{
         }
 //        this.gameCollisionManager.getGameColision(this.hero).drawRect(graphics);
     }
+
     public AnimationManager getAnimationManager(){
         return this.am;
     }

@@ -42,17 +42,6 @@ public class GameImage {
         this.setImageFromSprite(this.spritePosition, this.tileSize);
     }
 
-    public void drawImage(Vector2f vector2f, Graphics graphics){
-        graphics.drawImage(
-                this.image,
-                vector2f.getX() * GameMapManager.getTilesSize(),
-                vector2f.getY() * GameMapManager.getTilesSize());
-    }
-
-    public void drawImage(Graphics graphics){
-        this.drawImage(this.position, graphics);
-    }
-
     private void setImageFromSprite(Vector2f spritePosition, int tilesSize){
             this.image = this.image.getSubImage((int) spritePosition.getX() * tilesSize,
                     (int) spritePosition.getY() * tilesSize,
@@ -73,5 +62,16 @@ public class GameImage {
 
     public void setPosition(Vector2f position) {
         this.position = position;
+    }
+
+    public void drawImage(Vector2f vector2f, Graphics graphics){
+        graphics.drawImage(
+                this.image,
+                vector2f.getX() * GameMapManager.getTilesSize(),
+                vector2f.getY() * GameMapManager.getTilesSize());
+    }
+
+    public void drawImage(Graphics graphics){
+        this.drawImage(this.position, graphics);
     }
 }

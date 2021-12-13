@@ -1,11 +1,6 @@
 package Game.Map;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameMapManager {
-
-//    private List<Map> allMap = new ArrayList<Map>();
 
     private static final int TILES_SIZE = 32;
 

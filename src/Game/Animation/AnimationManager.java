@@ -15,13 +15,10 @@ public class AnimationManager {
 
     protected Image heroSprite;
     protected Image bulletSprite;
-    protected Image heartSpriteFull;
-    protected Image getHeartSpriteEmpty;
     protected Image assetsSprite;
     protected Image forestTiles;
 
     private static AnimationManager am;
-
 
     private AnimationManager() throws SlickException {
 
@@ -51,7 +48,7 @@ public class AnimationManager {
                 .withDuration(200)
                 .withTileSize(32)
                 .withFrameNumber(4)
-                .withName("Bullet")
+                .withName("FireEnergy")
                 .isVertical()
                 .build());
 

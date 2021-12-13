@@ -18,13 +18,13 @@ public class Enemy extends GameCharacter implements Character {
     private final AnimationManager am = AnimationManager.getInstance();
     private Animations actualDirection;
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
     private Enemy(Builder builder) throws SlickException {
         super(builder);
         this.actualDirection = Animations.DOWN;
-    }
-
-    public static Builder builder(){
-        return new Builder();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Enemy extends GameCharacter implements Character {
         }
     }
 
-    public static  class Builder extends GameCharacter.Builder<Builder>{
+    public static class Builder extends GameCharacter.Builder<Builder>{
         private CharacterWeapon characterWeapon;
 
         @Override

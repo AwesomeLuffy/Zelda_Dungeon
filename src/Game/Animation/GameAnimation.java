@@ -8,14 +8,20 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class GameAnimation{
     private final int tileSize;
-    private final String name;
-    private int frameNumber;
-    private Animation animation;
-    private Image sprite;
-    private boolean isVertical;
-    private Vector2f spritePos;
-    private int duration;
+    private final int duration;
+    private final int frameNumber;
 
+    private final boolean isVertical;
+
+    private final String name;
+
+    private Animation animation;
+
+    private Image sprite;
+
+    public static GameAnimationBuilder builder(){
+        return new GameAnimationBuilder();
+    }
 
     private GameAnimation(GameAnimationBuilder builder) throws SlickException {
 
@@ -24,11 +30,11 @@ public class GameAnimation{
         this.frameNumber = builder.frameNumber;
         this.sprite = builder.sprite;
         this.isVertical = builder.isVertical;
-        this.spritePos = builder.spritePos;
+        Vector2f spritePos = builder.spritePos;
         this.duration = builder.duration;
 
 
-        this.constructAnim((int) this.spritePos.getX(), (int) this.spritePos.getY(), this.isVertical);
+        this.constructAnim((int) spritePos.getX(), (int) spritePos.getY(), this.isVertical);
     }
 
     private void constructAnim(int x, int y, boolean isVertical) throws SlickException {
@@ -46,18 +52,38 @@ public class GameAnimation{
         }
     }
 
-    public static GameAnimationBuilder builder(){
-        return new GameAnimationBuilder();
+
+
+    public Animation getAnimation(){
+        return this.animation;
+    }
+
+    public int getTotalDuration(){
+        return this.frameNumber * this.duration;
+    }
+
+    public void play(Vector2f vector2f){
+        this.animation.draw(vector2f.getX() * GameMapManager.getTilesSize(), vector2f.getY() * GameMapManager.getTilesSize());
+    }
+
+    public void update(int i){
+        this.animation.update(i);
+    }
+
+    @Override
+    public String toString(){
+        return this.name + " - " + this.animation.toString();
     }
 
     public static class GameAnimationBuilder{
-        private String name;
+
         private int tileSize;
         private int frameNumber;
+        private int duration;
+        private boolean isVertical;
         private Animation animation;
         private Image sprite;
-        private boolean isVertical;
-        private int duration;
+        private String name;
         private Vector2f spritePos;
 
         public GameAnimationBuilder(){
@@ -108,26 +134,5 @@ public class GameAnimation{
             return new GameAnimation(this);
         }
 
-    }
-
-    public Animation getAnimation(){
-        return this.animation;
-    }
-
-    public int getTotalDuration(){
-        return this.frameNumber * this.duration;
-    }
-
-    public void play(Vector2f vector2f){
-        this.animation.draw(vector2f.getX() * GameMapManager.getTilesSize(), vector2f.getY() * GameMapManager.getTilesSize());
-    }
-
-    public void update(int i){
-        this.animation.update(i);
-    }
-
-    @Override
-    public String toString(){
-        return this.name + " - " + this.animation.toString();
     }
 }
